@@ -1,0 +1,72 @@
+<html>
+<head>
+<style>
+div.row {
+    display: flex;
+    height: 100%;
+}
+div.col1 {
+    width: 200px;
+    height: 100%;
+    flex: 0 0 200px;
+    border: 1px solid;
+}
+div.col2 {
+    flex: 1;
+    height: 100%;
+    border: 1px solid;
+}
+div.col3 {
+    width: 300px;
+    height: 100%;
+    flex: 0 0 300px;
+    border: 1px solid;
+}
+</style>
+</head>
+<body>
+
+<div class="row">
+    <div class="col1">
+        <input type="text" name="txtfilter" id="txtfilter" oninput="filter()">
+    </div>
+    <div class="col2">
+        <select id="opt" onchange="filter()">
+          <option value="prime">isPrime</option>
+          <option value="fibo">isFibonacci</option>
+        </select>
+    </div>
+    <div class="col3" id="col3">
+    </div>
+</div>
+
+<script>
+    function filter() {
+        let filter = document.getElementById("txtfilter").value;
+        let intvalue = parseInt(filter) || 0;
+        
+        if (intvalue < 0) {
+            document.getElementById("txtfilter").value = "1";
+        } else {
+            document.getElementById("txtfilter").value = intvalue.toString();
+        }
+
+        let sel = document.getElementById("opt");
+        let selvalue = sel.options[sel.selectedIndex].value;
+        let isprime = isPrime(intvalue);
+        
+        if (isprime && (selvalue == 'prime')) {
+            document.getElementById("col3").innerHTML = "true";
+        } else {
+            document.getElementById("col3").innerHTML = "false";
+        }
+    }
+    
+    function isPrime(num) {
+      for(var i = 2; i < num; i++)
+        if(num % i === 0) return false;
+      return num > 1;
+    }
+</script>
+</body>
+</html>

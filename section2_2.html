@@ -1,0 +1,48 @@
+<html>
+<head>
+</head>
+<body>
+<input type="text" name="txtfilter" id="txtfilter" width="200px" oninput="filter()">
+    <table name="tbltest" id="tblrest">
+    </table>
+<script>
+    callrest();
+    
+    function callrest() {
+        fetch('https://api.publicapis.org/categories', {
+          method: "GET"
+        })
+        .then(response => response.json())
+        .then(json => {  
+            let table = document.getElementById("tblrest");
+            
+            let data = json.toString().split(',');
+            data.forEach(function(item) {
+                var row = table.insertRow(table.count);
+                var cell1 = row.insertCell(0);
+                cell1.innerHTML = item;
+            });
+        })
+        .catch(err => console.log('Request Failed', err));
+    }
+    
+    function filter() {
+          let filter = document.getElementById("txtfilter").value;
+          let table = document.getElementById("tblrest");
+          let tr = table.getElementsByTagName("tr");
+
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+              let txtValue = td.textContent || td.innerText;
+              if (txtValue.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+    }
+</script>
+</body>
+</html>
